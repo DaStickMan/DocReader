@@ -4,9 +4,9 @@ Leitor/editor Android de **PDF**, **DOCX** e **Markdown**, com tela inicial que 
 arquivos recentes do aparelho. Desenvolvido com **SDD (spec-driven)** + **TDD**, por etapas.
 
 > **Estado atual:** o app abre, lista os recentes do aparelho e **visualiza os três formatos**:
-> PDF (paginação e zoom), DOCX (leitura) e Markdown (edição com pré-visualização e salvamento).
-> Gera APK de debug e de **release assinado**. As anotações de PDF têm modelo/validação
-> testados, mas ainda não a UI.
+> PDF (paginação, zoom e barra de ferramentas de anotação com desenho livre, destaque e notas adesivas),
+> DOCX (leitura) e Markdown (edição com pré-visualização e salvamento).
+> Gera APK de debug e de **release assinado**.
 
 ## Como rodar os testes
 ```bash
@@ -60,6 +60,6 @@ Ports & adapters: o núcleo roda em JVM puro e testável; tudo que toca o sistem
 | 8 | CI | ✅ (testes) |
 | 9 | Camadas Android: Room, MediaStore, UI Compose | ✅ |
 | 10 | Visualizadores: PDF (paginação/zoom), DOCX, editor Markdown | ✅ |
-| 11 | UI de anotações de PDF (modelo pronto) | ⏳ |
+| 11 | UI de anotações de PDF (caneta, destaque, notas, desfazer) | ✅ |
 
 Cada etapa tem uma spec em `specs/` e testes escritos antes da implementação.
