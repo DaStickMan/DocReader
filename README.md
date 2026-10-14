@@ -3,10 +3,10 @@
 Leitor/editor Android de **PDF**, **DOCX** e **Markdown**, com tela inicial que lista os
 arquivos recentes do aparelho. Desenvolvido com **SDD (spec-driven)** + **TDD**, por etapas.
 
-> **Estado atual:** todo o núcleo de regras (JVM puro) está implementado e testado.
-> As camadas Android (UI Compose, Room, MediaStore, renderização de PDF) **dependem do
-> Android SDK**, que não está instalado neste ambiente — por isso não existem ainda.
-> O design mantém essas camadas atrás de *ports*, de modo que entram sem reescrever o núcleo.
+> **Estado atual:** o núcleo de regras (JVM puro) e as camadas Android básicas
+> (Room, MediaStore, UI Compose da tela "Abrir arquivo") estão implementadas e testadas.
+> `./gradlew :app:assembleDebug` gera um APK. A renderização/edição dos documentos
+> dentro do app ainda não existe (próximas etapas).
 
 ## Como rodar os testes
 ```bash
@@ -22,7 +22,15 @@ core/application/    # GetRecentDocuments, OpenDocument
 core/ooxml/          # DocxParser (leitura DOCX, StAX + zip)
 core/markdown/       # MarkdownOutline, SavePlanner
 core/pdf/            # PdfViewerState, Annotation + AnnotationValidator
+core/data/           # Android: RoomRecentStore, MediaStoreDocumentSource, loader de URI
+app/                 # Android: Compose UI da tela "Abrir arquivo", AppContainer, MainActivity
 ```
+
+## Build
+```bash
+./gradlew :app:assembleDebug   # gera app/build/outputs/apk/debug/app-debug.apk
+```
+Requer o Android SDK (veja `local.properties`).
 
 ## Arquitetura
 Ports & adapters: o núcleo roda em JVM puro e testável; tudo que toca o sistema
@@ -40,6 +48,7 @@ Ports & adapters: o núcleo roda em JVM puro e testável; tudo que toca o sistem
 | 6 | Markdown: outline + salvamento | ✅ |
 | 7 | Anotações de PDF: modelo + validação | ✅ |
 | 8 | CI | ✅ (testes) |
-| 9+ | UI Compose, Room, MediaStore, renderização | ⏳ requer Android SDK |
+| 9 | Camadas Android: Room, MediaStore, UI Compose | ✅ |
+| 10+ | Renderização de PDF/DOCX/MD na UI, anotações | ⏳ |
 
 Cada etapa tem uma spec em `specs/` e testes escritos antes da implementação.
