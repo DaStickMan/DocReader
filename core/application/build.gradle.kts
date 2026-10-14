@@ -8,6 +8,7 @@ kotlin {
 
 dependencies {
     api(project(":core:ports"))
+    api(project(":core:markdown"))
     implementation(libs.kotlinx.coroutines.core)
 
     testImplementation(libs.junit.jupiter)

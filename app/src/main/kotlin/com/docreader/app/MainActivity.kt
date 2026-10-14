@@ -3,7 +3,6 @@ package com.docreader.app
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.lifecycle.viewmodel.compose.viewModel
 
 class MainActivity : ComponentActivity() {
 
@@ -13,10 +12,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             DocReaderTheme {
-                val viewModel: RecentFilesViewModel = viewModel(
-                    factory = RecentFilesViewModel.factory(container),
-                )
-                RecentFilesScreen(viewModel = viewModel)
+                MainScreen(container = container)
             }
         }
     }

@@ -1,11 +1,16 @@
 package com.docreader.app
 
 import android.content.Context
+import com.docreader.core.application.DocumentContent
 import com.docreader.core.application.GetRecentDocuments
 import com.docreader.core.application.OpenDocument
+import com.docreader.core.application.PlanMarkdownSave
 import com.docreader.core.application.RecentFilesStateHolder
+import com.docreader.core.data.ContentUriContentReader
 import com.docreader.core.data.ContentUriDocumentLoader
+import com.docreader.core.data.ContentUriTextWriter
 import com.docreader.core.data.MediaStoreDocumentSource
+import com.docreader.core.data.PdfPageRendererFactory
 import com.docreader.core.data.createRecentStore
 import com.docreader.core.ports.Clock
 import com.docreader.core.ports.DocumentSource
@@ -25,4 +30,11 @@ class AppContainer(context: Context) {
     val openDocument: OpenDocument = OpenDocument(recentStore, clock)
     val recentFilesStateHolder: RecentFilesStateHolder = RecentFilesStateHolder(getRecentDocuments)
     val documentLoader: ContentUriDocumentLoader = ContentUriDocumentLoader(appContext.contentResolver)
+
+    val documentContent: DocumentContent = DocumentContent(
+        reader = ContentUriContentReader(appContext.contentResolver),
+        writer = ContentUriTextWriter(appContext.contentResolver),
+    )
+    val planMarkdownSave: PlanMarkdownSave = PlanMarkdownSave(clock)
+    val pdfPageRendererFactory: PdfPageRendererFactory = PdfPageRendererFactory(appContext.contentResolver)
 }

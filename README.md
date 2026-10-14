@@ -3,10 +3,10 @@
 Leitor/editor Android de **PDF**, **DOCX** e **Markdown**, com tela inicial que lista os
 arquivos recentes do aparelho. Desenvolvido com **SDD (spec-driven)** + **TDD**, por etapas.
 
-> **Estado atual:** o núcleo de regras (JVM puro) e as camadas Android básicas
-> (Room, MediaStore, UI Compose da tela "Abrir arquivo") estão implementadas e testadas.
-> `./gradlew :app:assembleDebug` gera um APK. A renderização/edição dos documentos
-> dentro do app ainda não existe (próximas etapas).
+> **Estado atual:** o app abre, lista os recentes do aparelho e **visualiza os três formatos**:
+> PDF (paginação e zoom), DOCX (leitura) e Markdown (edição com pré-visualização e salvamento).
+> Gera APK de debug e de **release assinado**. As anotações de PDF têm modelo/validação
+> testados, mas ainda não a UI.
 
 ## Como rodar os testes
 ```bash
@@ -28,9 +28,19 @@ app/                 # Android: Compose UI da tela "Abrir arquivo", AppContainer
 
 ## Build
 ```bash
-./gradlew :app:assembleDebug   # gera app/build/outputs/apk/debug/app-debug.apk
+./gradlew :app:assembleDebug     # app/build/outputs/apk/debug/app-debug.apk
+./gradlew :app:assembleRelease   # APK assinado (usa keystore.properties)
 ```
 Requer o Android SDK (veja `local.properties`).
+
+Para assinar o release, copie `keystore.properties.example` para `keystore.properties`
+e gere o keystore com `keytool` (ambos são ignorados pelo Git). Sem o arquivo, o build de
+release ainda funciona usando a chave de debug.
+
+## Release automático
+Ao empurrar uma tag `v*`, o workflow `.github/workflows/release.yml` roda os testes,
+gera o APK de release e o anexa a uma GitHub Release. Configure os secrets
+`KEYSTORE_BASE64`, `KEYSTORE_PASSWORD`, `KEY_ALIAS` e `KEY_PASSWORD`.
 
 ## Arquitetura
 Ports & adapters: o núcleo roda em JVM puro e testável; tudo que toca o sistema
@@ -49,6 +59,7 @@ Ports & adapters: o núcleo roda em JVM puro e testável; tudo que toca o sistem
 | 7 | Anotações de PDF: modelo + validação | ✅ |
 | 8 | CI | ✅ (testes) |
 | 9 | Camadas Android: Room, MediaStore, UI Compose | ✅ |
-| 10+ | Renderização de PDF/DOCX/MD na UI, anotações | ⏳ |
+| 10 | Visualizadores: PDF (paginação/zoom), DOCX, editor Markdown | ✅ |
+| 11 | UI de anotações de PDF (modelo pronto) | ⏳ |
 
 Cada etapa tem uma spec em `specs/` e testes escritos antes da implementação.

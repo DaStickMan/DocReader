@@ -5,3 +5,9 @@ build/
 *.iml
 local.properties
 .DS_Store
+
+# Segredos de assinatura (nunca versionar)
+keystore.properties
+keystore/
+*.jks
+*.keystore
