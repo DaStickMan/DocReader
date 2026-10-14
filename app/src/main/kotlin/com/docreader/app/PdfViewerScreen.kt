@@ -80,7 +80,11 @@ private val PALETTE_COLORS = listOf(
 )
 
 @Composable
-fun PdfViewerScreen(document: Document, factory: PdfPageRendererFactory) {
+fun PdfViewerScreen(
+    document: Document,
+    factory: PdfPageRendererFactory,
+    annotationStore: com.docreader.core.ports.AnnotationStore? = null,
+) {
     var renderer by remember { mutableStateOf<PdfPageRenderer?>(null) }
     var viewerState by remember { mutableStateOf<PdfViewerState?>(null) }
     var annotationSession by remember { mutableStateOf<PdfAnnotationSession?>(null) }
@@ -97,8 +101,15 @@ fun PdfViewerScreen(document: Document, factory: PdfPageRendererFactory) {
         } else {
             renderer = opened
             viewerState = PdfViewerState(pageCount = opened.pageCount)
-            annotationSession = PdfAnnotationSession(pageCount = opened.pageCount)
+            val saved = annotationStore?.getAnnotations(document.uri).orEmpty()
+            annotationSession = PdfAnnotationSession(pageCount = opened.pageCount, annotations = saved)
         }
+    }
+
+    val currentAnnotations = annotationSession?.annotations
+    LaunchedEffect(currentAnnotations) {
+        val annotations = currentAnnotations ?: return@LaunchedEffect
+        annotationStore?.saveAnnotations(document.uri, annotations)
     }
 
     DisposableEffect(Unit) {

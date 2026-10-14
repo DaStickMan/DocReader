@@ -36,7 +36,11 @@ fun ViewerScreen(document: Document, container: AppContainer, onBack: () -> Unit
                 .fillMaxSize(),
         ) {
             when (document.type) {
-                DocumentType.PDF -> PdfViewerScreen(document, container.pdfPageRendererFactory)
+                DocumentType.PDF -> PdfViewerScreen(
+                    document = document,
+                    factory = container.pdfPageRendererFactory,
+                    annotationStore = container.annotationStore,
+                )
 
                 DocumentType.DOCX -> DocxViewerScreen(document, container.documentContent)
 

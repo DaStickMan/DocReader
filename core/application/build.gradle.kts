@@ -14,6 +14,7 @@ dependencies {
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.assertj.core)
     testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(project(":core:ooxml"))
     testRuntimeOnly(libs.junit.platform.launcher)
 }
 

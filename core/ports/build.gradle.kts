@@ -8,6 +8,7 @@ kotlin {
 
 dependencies {
     api(project(":core:domain"))
+    api(project(":core:pdf"))
     implementation(libs.kotlinx.coroutines.core)
 
     testImplementation(libs.junit.jupiter)

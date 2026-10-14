@@ -61,5 +61,6 @@ Ports & adapters: o núcleo roda em JVM puro e testável; tudo que toca o sistem
 | 9 | Camadas Android: Room, MediaStore, UI Compose | ✅ |
 | 10 | Visualizadores: PDF (paginação/zoom), DOCX, editor Markdown | ✅ |
 | 11 | UI de anotações de PDF (caneta, destaque, notas, desfazer) | ✅ |
+| 12 | Persistência de anotações em Room | ✅ |
 
 Cada etapa tem uma spec em `specs/` e testes escritos antes da implementação.

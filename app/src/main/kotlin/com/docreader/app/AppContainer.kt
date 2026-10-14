@@ -23,6 +23,7 @@ class AppContainer(context: Context) {
     private val appContext: Context = context.applicationContext
 
     private val recentStore: RecentStore = createRecentStore(appContext)
+    val annotationStore: com.docreader.core.ports.AnnotationStore = com.docreader.core.data.createAnnotationStore(appContext)
     private val documentSource: DocumentSource = MediaStoreDocumentSource(appContext.contentResolver)
     private val clock: Clock = Clock { Instant.now() }
 
